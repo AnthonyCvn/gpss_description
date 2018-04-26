@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="rvizconfig" default="$(find gpss_description)/rviz/urdf.rviz" />
+
+	<!-- these are the arguments you can pass this launch file, for example paused:=true -->
+	<arg name="paused" default="false"/>
+	<arg name="use_sim_time" default="true"/>
+	<arg name="gui" default="true"/>
+	<arg name="headless" default="false"/>
+	<arg name="debug" default="false"/>
+
+	<!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="world_name" value="$(find gpss_description)/worlds/gpss.world"/>
+		<arg name="debug" value="$(arg debug)" />
+		<arg name="gui" value="$(arg gui)" />
+		<arg name="paused" value="$(arg paused)"/>
+		<arg name="use_sim_time" value="$(arg use_sim_time)"/>
+		<arg name="headless" value="$(arg headless)"/>
+	</include>
+
+	<!-- Launch visualization in rviz -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+	<!-- Load the Camera URDF into the ROS Parameter Server 
+  	<arg name="camera_model" default="$(find gpss_description)/urdf/camera.urdf.xacro"/>
+  	<param name="camera_description"
+    	command="$(find xacro)/xacro inorder $(arg camera_model)" />
+-->
+
+  	<!-- CAMERA 0 -->
+	<group ns="camera0">
+		<param name="tf_prefix" value="camera0" />
+		<include file="$(find gpss_description)/launch/camera.launch" >
+		  	<arg name="init_pose" value="-x 0 -y 0 -z 2.5" />
+		  	<arg name="camera_name"  value="camera0" />
+		</include>
+	</group>
+
+	<!-- CAMERA 1 -->
+	<group ns="camera1">
+		<param name="tf_prefix" value="camera1" />
+		<include file="$(find gpss_description)/launch/camera.launch" >
+		  	<arg name="init_pose" value="-x 2 -y 0 -z 2.5" />
+		  	<arg name="camera_name"  value="camera1" />
+		</include>
+	</group>
+
+		<!-- CAMERA 2 -->
+	<group ns="camera2">
+		<param name="tf_prefix" value="camera2" />
+		<include file="$(find gpss_description)/launch/camera.launch" >
+		  	<arg name="init_pose" value="-x 0 -y 2 -z 3" />
+		  	<arg name="camera_name"  value="camera2" />
+		</include>
+	</group>
+
+		<!-- CAMERA 3 -->
+	<group ns="camera3">
+		<param name="tf_prefix" value="camera3" />
+		<include file="$(find gpss_description)/launch/camera.launch" >
+		  	<arg name="init_pose" value="-x 2 -y 2 -z 3" />
+		  	<arg name="camera_name"  value="camera3" />
+		</include>
+	</group>
+
+  	<!-- MIR 0 -->
+	<group ns="robot0">
+		<param name="tf_prefix" value="robot0" />
+		<include file="$(find mir100_description)/launch/mir100.launch" >
+		  	<arg name="init_pose" value="-x 0 -y 0 -z 0" />
+		  	<arg name="robot_name"  value="robot0" />
+		  	<arg name="config_file"  value="control_mir_0.yaml" />
+		</include>
+	</group>
+
+	<!-- MIR 1 -->
+	<group ns="robot1">
+		<param name="tf_prefix" value="robot1" />
+		<include file="$(find mir100_description)/launch/mir100.launch" >
+		  	<arg name="init_pose" value="-x 0 -y 1 -z 0" />
+		  	<arg name="robot_name"  value="robot1" />
+		  	<arg name="config_file"  value="control_mir_1.yaml" />
+		</include>
+	</group>
+
+	<!-- MIR 2 -->
+	<group ns="robot2">
+		<param name="tf_prefix" value="robot2" />
+		<include file="$(find mir100_description)/launch/mir100.launch" >
+		  	<arg name="init_pose" value="-x 0 -y 2 -z 0" />
+		  	<arg name="robot_name"  value="robot2" />
+		  	<arg name="config_file"  value="control_mir_2.yaml" />
+		</include>
+	</group>
+
+</launch>
