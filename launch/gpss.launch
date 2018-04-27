@@ -75,6 +75,7 @@
 	</group>
 
 	<!-- MIR 1 -->
+<!--
 	<group ns="robot1">
 		<param name="tf_prefix" value="robot1" />
 		<include file="$(find mir100_description)/launch/mir100.launch" >
@@ -83,8 +84,10 @@
 		  	<arg name="config_file"  value="control_mir_1.yaml" />
 		</include>
 	</group>
+-->
 
 	<!-- MIR 2 -->
+<!--
 	<group ns="robot2">
 		<param name="tf_prefix" value="robot2" />
 		<include file="$(find mir100_description)/launch/mir100.launch" >
@@ -93,5 +96,6 @@
 		  	<arg name="config_file"  value="control_mir_2.yaml" />
 		</include>
 	</group>
+-->
 
 </launch>
